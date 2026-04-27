@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Avaliacao, avaliacaoMedia } from "@/data/avaliacoes";
 import { classificacaoTexto } from "@/data/relatorioConteudo";
-import { FileDown, FileSpreadsheet, Calendar, Users, Building2, GripVertical, BarChart3 } from "lucide-react";
+import { FileDown, FileSpreadsheet, Calendar, Users, Building2, GripVertical, BarChart3, X } from "lucide-react";
 import {
   RankingChart,
   CHART_TYPE_OPTIONS,
@@ -20,6 +20,7 @@ interface Props {
   onExportPDF: (av: Avaliacao) => void;
   onExportXLS: (av: Avaliacao) => void;
   exporting?: { id: string; type: "pdf" | "xlsx" } | null;
+  onRemove?: (av: Avaliacao) => void;
 }
 
 const colorFor = (score: number) => {
@@ -28,7 +29,7 @@ const colorFor = (score: number) => {
   return "hsl(var(--risk-high))";
 };
 
-export const AvaliacaoCard = ({ avaliacao, onExportPDF, onExportXLS, exporting }: Props) => {
+export const AvaliacaoCard = ({ avaliacao, onExportPDF, onExportXLS, exporting, onRemove }: Props) => {
   const top = avaliacao.ranking.slice(0, 10);
   const media = avaliacaoMedia(avaliacao);
   const cls = classificacaoTexto(media);
@@ -89,6 +90,15 @@ export const AvaliacaoCard = ({ avaliacao, onExportPDF, onExportXLS, exporting }
               <FileDown className="h-3.5 w-3.5" />
               {isExportingPdf ? "Gerando..." : "PDF"}
             </button>
+            {onRemove && (
+              <button
+                onClick={() => onRemove(avaliacao)}
+                title="Remover card"
+                className="flex items-center justify-center h-8 w-8 rounded-md border border-border bg-white text-muted-foreground hover:text-destructive hover:border-destructive/40 hover:bg-destructive/5 transition-colors"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
           </div>
         </div>
 
