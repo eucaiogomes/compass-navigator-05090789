@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* COPSOQ II Executive Dashboard — Corporate Navy Design System.
+   All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 215 45% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 45% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 45% 12%;
+
+    /* Navy primary (Lector-style) */
+    --primary: 215 65% 17%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 215 55% 28%;
+
+    --secondary: 210 35% 94%;
+    --secondary-foreground: 215 45% 17%;
+
+    --muted: 210 30% 95%;
+    --muted-foreground: 215 16% 42%;
+
+    /* Orange accent */
+    --accent: 32 95% 48%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 78% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 28% 88%;
+    --input: 214 28% 88%;
+    --ring: 215 65% 28%;
+
+    --radius: 0.75rem;
+
+    /* Semantic risk tokens */
+    --risk-low: 142 60% 40%;
+    --risk-low-bg: 142 55% 92%;
+    --risk-moderate: 42 95% 50%;
+    --risk-moderate-bg: 42 95% 92%;
+    --risk-high: 0 78% 52%;
+    --risk-high-bg: 0 80% 94%;
+
+    /* Chart palette */
+    --chart-1: 215 65% 27%;
+    --chart-2: 32 95% 48%;
+    --chart-3: 200 75% 45%;
+    --chart-4: 264 50% 50%;
+    --chart-5: 168 60% 38%;
+
+    --shadow-card: 0 1px 3px 0 hsl(215 45% 12% / 0.06), 0 1px 2px -1px hsl(215 45% 12% / 0.06);
+    --shadow-elevated: 0 10px 30px -10px hsl(215 65% 17% / 0.18);
+    --gradient-primary: linear-gradient(135deg, hsl(215 65% 17%), hsl(215 55% 28%));
+    --gradient-header: linear-gradient(90deg, hsl(215 70% 14%), hsl(215 60% 22%));
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 215 45% 8%;
+    --foreground: 210 40% 98%;
+    --card: 215 40% 12%;
+    --card-foreground: 210 40% 98%;
+    --popover: 215 40% 12%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 215 65% 17%;
+    --secondary: 215 30% 18%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 215 30% 18%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 32 95% 48%;
+    --accent-foreground: 215 45% 12%;
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 215 30% 22%;
+    --input: 215 30% 22%;
+    --ring: 215 60% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  h1, h2, h3, h4 {
+    @apply tracking-tight;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-header {
+    background: var(--gradient-header);
+  }
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  .shadow-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+}
+
+/* React-Grid-Layout — visual polish para drag/resize */
+.react-grid-item.react-grid-placeholder {
+  background: hsl(var(--accent) / 0.18) !important;
+  border: 2px dashed hsl(var(--accent));
+  border-radius: 1rem;
+  opacity: 1 !important;
+}
+.react-grid-item.react-draggable-dragging {
+  z-index: 50;
+  box-shadow: 0 18px 40px -12px hsl(var(--primary) / 0.35);
+  cursor: grabbing !important;
+}
+.react-grid-item > .react-resizable-handle {
+  background-image: none;
+  width: 18px;
+  height: 18px;
+  opacity: 0.55;
+  transition: opacity 0.15s;
+}
+.react-grid-item:hover > .react-resizable-handle {
+  opacity: 1;
+}
+.react-grid-item > .react-resizable-handle.react-resizable-handle-se::after {
+  content: "";
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid hsl(var(--primary));
+  border-bottom: 2px solid hsl(var(--primary));
+  border-bottom-right-radius: 2px;
+}
+.react-grid-item > .react-resizable-handle.react-resizable-handle-e {
+  right: 0;
+  top: 50%;
+  margin-top: -9px;
+  cursor: ew-resize;
+}
+.react-grid-item > .react-resizable-handle.react-resizable-handle-e::after {
+  content: "";
+  position: absolute;
+  right: 5px;
+  top: 4px;
+  width: 3px;
+  height: 10px;
+  border-left: 2px solid hsl(var(--primary));
+  border-right: 2px solid hsl(var(--primary));
+}
+.react-grid-item > .react-resizable-handle.react-resizable-handle-s {
+  bottom: 0;
+  left: 50%;
+  margin-left: -9px;
+  cursor: ns-resize;
+}
+.react-grid-item > .react-resizable-handle.react-resizable-handle-s::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  left: 4px;
+  width: 10px;
+  height: 3px;
+  border-top: 2px solid hsl(var(--primary));
+  border-bottom: 2px solid hsl(var(--primary));
+}
+
