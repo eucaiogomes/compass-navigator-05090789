@@ -13,6 +13,8 @@ interface Props {
   onFilterChange?: (value: string) => void;
   periodLabel?: string;
   onAdd?: () => void;
+  addOptions?: { id: string; label: string; sublabel?: string; disabled?: boolean }[];
+  onAddSelect?: (id: string) => void;
 }
 
 export const PageBar = ({
@@ -22,6 +24,8 @@ export const PageBar = ({
   onFilterChange,
   periodLabel = "Abril - 2026",
   onAdd,
+  addOptions,
+  onAddSelect,
 }: Props) => {
   return (
     <div className="space-y-3">
@@ -63,13 +67,46 @@ export const PageBar = ({
           <Calendar className="h-4 w-4 text-muted-foreground" strokeWidth={2} />
         </button>
 
-        <button
-          onClick={onAdd}
-          title="Nova avaliação"
-          className="h-10 w-10 rounded-full border-2 border-accent text-accent flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-colors"
-        >
-          <Plus className="h-5 w-5" strokeWidth={2.5} />
-        </button>
+        {addOptions && onAddSelect ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                title="Adicionar avaliação"
+                className="h-10 w-10 rounded-full border-2 border-accent text-accent flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-colors"
+              >
+                <Plus className="h-5 w-5" strokeWidth={2.5} />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="min-w-[300px] bg-white">
+              {addOptions.length === 0 && (
+                <div className="px-3 py-4 text-xs text-muted-foreground text-center">
+                  Todas as avaliações já estão na tela.
+                </div>
+              )}
+              {addOptions.map((opt) => (
+                <DropdownMenuItem
+                  key={opt.id}
+                  disabled={opt.disabled}
+                  onClick={() => !opt.disabled && onAddSelect(opt.id)}
+                  className="flex flex-col items-start gap-0.5 cursor-pointer py-2"
+                >
+                  <span className="text-sm font-medium text-foreground">{opt.label}</span>
+                  {opt.sublabel && (
+                    <span className="text-[11px] text-muted-foreground">{opt.sublabel}</span>
+                  )}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <button
+            onClick={onAdd}
+            title="Nova avaliação"
+            className="h-10 w-10 rounded-full border-2 border-accent text-accent flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-colors"
+          >
+            <Plus className="h-5 w-5" strokeWidth={2.5} />
+          </button>
+        )}
       </div>
     </div>
   );
